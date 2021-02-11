@@ -1,0 +1,132 @@
+<!-- The footer at the very bottom of the screen -->
+<footer class="footer section-padding">
+  <div class="grid">
+    <div class="subscribe" id="subscribe">
+      <div class="subscribe__container">
+        <span class="subscribe__title">Subscribe</span>
+        <p class="subscribe__text">to our very infrequent newsletter</p>
+        {% include subscribe-form.html %}
+      </div>
+    </div>
+
+    <hr class="sep"/>
+
+    <div class="footer__container">
+      <!-- {% tags_list :threshold => 1, :sort_by => count, :order_by => desc, :limit => 5 %} -->
+
+      {% include social.html %}
+    </div>
+  </div>
+</footer>
+{% include contact.html %}
+
+{% if paginator.next_page %}
+  <script>
+    var maxPages = parseInt('{{ paginator.total_pages }}');
+  </script>
+{% endif %}
+
+<script src="{{ '/assets/js/app.min.js' | prepend: site.baseurl }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+$(document).ready(function() {
+	$('.center').slick({
+		centerMode: true,
+		centerPadding: '12px',
+		slidesToShow: 1
+	});
+});
+</script>
+
+<script>
+	let logo = document.querySelector("#Layer_1");
+
+let tl = gsap.timeline({ repeat: -1 });
+
+function hoverAnimationIn() {
+  gsap.to("#logo-1", 0.5, {
+    scale: 0,
+    transformOrigin: "center",
+    ease: "back.out(2)",
+  });
+  gsap.to("#logo-2", 0.5, {
+    scale: 1,
+    transformOrigin: "center",
+    ease: "back.out(2)",
+    opacity: 1,
+  });
+}
+
+function hoverAnimationOut() {
+  gsap.to("#logo-2", 0.5, {
+    scale: 0,
+    transformOrigin: "center",
+    ease: "back.out(1)",
+    opacity: 0,
+  });
+  gsap.to("#logo-1", 0.5, {
+    scale: 1,
+    transformOrigin: "center",
+    ease: "back.out(1.5)",
+  });
+}
+
+function animationOnMobile() {
+  tl.to("#logo-1", 0.25, {
+    delay: 5,
+    scale: 0,
+    transformOrigin: "center",
+    ease: "back.out(2)",
+    opacity: 0,
+  })
+    .to("#logo-2", 0, {
+      opacity: 1,
+      scale: 0,
+      transformOrigin: "center",
+      ease: "back.out(1.5)",
+    })
+    .to("#logo-2", 0.25, {
+      scale: 1,
+      transformOrigin: "center",
+      ease: "back.out(2.5)",
+    })
+    .to("#logo-2", 0.25, {
+      opacity: 0,
+      delay: 5,
+      scale: 0,
+      transformOrigin: "center",
+      ease: "back.out(1.5)",
+    })
+    .to("#logo-1", 0.25, {
+      opacity: 1,
+      scale: 1,
+      transformOrigin: "center",
+      ease: "back.out(1.5)",
+    });
+}
+
+if (window.matchMedia("(max-width: 1000px)").matches) {
+  /* The viewport is less than, or equal to, 700 pixels wide */
+
+  logo.removeEventListener("mouseenter", () => {
+    hoverAnimationIn();
+  });
+
+  logo.removeEventListener("mouseleave", () => {
+    hoverAnimationOut();
+  });
+
+  animationOnMobile();
+} else {
+  /* The viewport is greater than 700 pixels wide */
+  logo.addEventListener("mouseenter", () => {
+    hoverAnimationIn();
+  });
+
+  logo.addEventListener("mouseleave", () => {
+    hoverAnimationOut();
+  });
+}
+
+</script>

@@ -1,0 +1,13 @@
+<ul class="related_posts slider center">
+	{% for post in site.related_posts %}
+	<div class="slick-slide">
+		{% if post.image %}
+		<div class="posts__image">
+			<img src="{{ post.image }}">
+		</div>
+		{% endif %}
+		<h2 itemprop="name posts__headline">{{ post.title }}</h2>
+		<a class="posts__link" href="{{ post.url | prepend: site.baseurl }}" itemprop="url"> Read more </a>
+	</div>
+	{% endfor %}
+</ul>
